@@ -43,7 +43,7 @@ ${isFirstUserWinner.rowId + 1} ${isFirstUserWinner.columnId + 1}`)
 ${isSecondUserWinner.rowId + 1} ${isSecondUserWinner.columnId + 1}`)
   }
   else {
-    console.log('DRAW')
+    console.log('0')
   }
 })
 

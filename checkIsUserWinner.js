@@ -22,7 +22,7 @@ const checkIsEnoughStonesInVerticalLine = (userStones) => {
   }) ?? false
 }
 
-const checkIsEnoughStonesInDeahonalLine = (userStones) => {
+const checkIsEnoughStonesInPrimaryDeahonalLine = (userStones) => {
   return userStones.find((startStone) => {
     for(let foundStones = 1; foundStones < STONES_TO_WIN; foundStones++) {
       if(!userStones.find(searchedStone => searchedStone.rowId === startStone.rowId + foundStones && searchedStone.columnId === startStone.columnId + foundStones)) {
@@ -33,6 +33,21 @@ const checkIsEnoughStonesInDeahonalLine = (userStones) => {
   }) ?? false
 }
 
+const checkIsEnoughStonesInSecondaryDeahonalLine = (userStones) => {
+  const sequenceHead = userStones.find((startStone) => {
+    for(let foundStones = 1; foundStones < STONES_TO_WIN; foundStones++) {
+      if(!userStones.find(searchedStone => searchedStone.rowId === startStone.rowId + foundStones && searchedStone.columnId === startStone.columnId - foundStones)) {
+        return false
+      }
+    }
+    return true
+  })
+  return sequenceHead ? {
+    rowId: sequenceHead.rowId + STONES_TO_WIN - 1,
+    columnId: sequenceHead.columnId - STONES_TO_WIN + 1,
+  } : false
+}
+
 export const checkIsUserWinner = (userStones) => {
-  return checkIsEnoughStonesInHorizontalLine(userStones) || checkIsEnoughStonesInVerticalLine(userStones) || checkIsEnoughStonesInDeahonalLine(userStones)
+  return checkIsEnoughStonesInHorizontalLine(userStones) || checkIsEnoughStonesInVerticalLine(userStones) || checkIsEnoughStonesInPrimaryDeahonalLine(userStones) || checkIsEnoughStonesInSecondaryDeahonalLine(userStones)
 }
