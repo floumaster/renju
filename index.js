@@ -9,23 +9,18 @@ const FIRST_USER_STONE_VALUE = 1
 const SECOND_USER_STONE_VALUE = 2
 
 const parsedFileContent = getInputFileContent(INPUT_FILE_PATH)
-const testCasesNumber = parsedFileContent[TEST_CASES_NUMBER_POSITION]
 const seriallizedTestCases = parsedFileContent.slice(TEST_CASES_NUMBER_POSITION + NEW_LINE_CHARACTERS.length + 1)
 const testCases = deseriallizeTestCases(seriallizedTestCases)
-const limitedTestCases = testCases.slice(0, testCasesNumber) 
-limitedTestCases.forEach((testCase, id) => {
+const limitedTestCases = testCases.slice(0, parsedFileContent[TEST_CASES_NUMBER_POSITION]) 
+limitedTestCases.forEach((testCase) => {
   console.table(testCase)
   const firstUserStones = []
   const seconsUserStones = []
   testCase.forEach((row, rowId) => {
     row.forEach((value, columnId) => {
-      if (value === FIRST_USER_STONE_VALUE) {
-        firstUserStones.push({
-          rowId,
-          columnId
-        })
-      } else if (value === SECOND_USER_STONE_VALUE){
-        seconsUserStones.push({
+      if(value) {
+        const useStones = value === FIRST_USER_STONE_VALUE ? firstUserStones : seconsUserStones
+        useStones.push({
           rowId,
           columnId
         })
